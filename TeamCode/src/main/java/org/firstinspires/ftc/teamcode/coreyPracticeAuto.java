@@ -107,22 +107,20 @@ public class coreyPracticeAuto extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        moveForward(1,2000);
-
-        // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
+        moveForward(.5,2000);
 
 
-            public void moveForward (int power,int time) {
-                    leftBackDrive.setPower(-power);
-                    leftFrontDrive.setPower(power);
-                    rightBackDrive.setPower(power);
-                    rightFrontDrive.setPower(-power);
-                    sleep(time);
-            }
+
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }
-    }}
+    public void moveForward (double power,int time) {
+        leftBackDrive.setPower(-power);
+        leftFrontDrive.setPower(power);
+        rightBackDrive.setPower(power);
+        rightFrontDrive.setPower(-power);
+        sleep(time);
+    }
+    }
