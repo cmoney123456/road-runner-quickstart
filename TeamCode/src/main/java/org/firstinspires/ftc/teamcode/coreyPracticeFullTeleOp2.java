@@ -313,7 +313,7 @@ public class coreyPracticeFullTeleOp2 extends LinearOpMode {
                     they were doing before we clicked left bumper. */
                     armPosition = ARM_CLEAR_BARRIER;
                 }
-
+//HELLO
                 else if (gamepad2.x){
                     /* This is the correct height to score the sample in the HIGH BASKET */
                     armPosition = ARM_SCORE_SAMPLE_IN_LOW;
