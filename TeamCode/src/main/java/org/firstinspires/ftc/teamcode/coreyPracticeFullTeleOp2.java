@@ -116,7 +116,7 @@ public class coreyPracticeFullTeleOp2 extends LinearOpMode {
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
     final double WRIST_FOLDED_IN   = 0.1667;
-    final double WRIST_FOLDED_OUT  = 0.5;
+    final double WRIST_FOLDED_OUT  = 0.6;
 
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -191,7 +191,7 @@ public class coreyPracticeFullTeleOp2 extends LinearOpMode {
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        liftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         liftMotor.setTargetPosition(0);
         liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -301,7 +301,7 @@ public class coreyPracticeFullTeleOp2 extends LinearOpMode {
             if(gamepad2.a){
                 /* This is the intaking/collecting arm position */
                 armPosition = ARM_COLLECT;
-                //liftPosition = LIFT_COLLAPSED;
+                liftPosition = LIFT_COLLAPSED;
                 wrist.setPosition(WRIST_FOLDED_OUT);
                 intake.setPower(INTAKE_COLLECT);
                 }
@@ -317,14 +317,14 @@ public class coreyPracticeFullTeleOp2 extends LinearOpMode {
                 else if (gamepad2.x){
                     /* This is the correct height to score the sample in the HIGH BASKET */
                     armPosition = ARM_SCORE_SAMPLE_IN_LOW;
-                    //liftPosition = LIFT_SCORING_IN_HIGH_BASKET;
+                    liftPosition = LIFT_SCORING_IN_HIGH_BASKET;
                 }
 
                 else if (gamepad2.dpad_left) {
                     /* This turns off the intake, folds in the wrist, and moves the arm
                     back to folded inside the robot. This is also the starting configuration */
                     armPosition = ARM_COLLAPSED_INTO_ROBOT;
-                    //liftPosition = LIFT_COLLAPSED;
+                    liftPosition = LIFT_COLLAPSED;
                     intake.setPower(INTAKE_OFF);
                     wrist.setPosition(WRIST_FOLDED_IN);
                 }
@@ -401,10 +401,10 @@ public class coreyPracticeFullTeleOp2 extends LinearOpMode {
             we are only incrementing it a small amount each cycle.
              */
 
-            if (gamepad2.right_bumper){
+            if (gamepad1.right_bumper){
                 liftPosition += 2800 * cycletime;
             }
-            else if (gamepad2.left_bumper){
+            else if (gamepad1.left_bumper){
                 liftPosition -= 2800 * cycletime;
             }
             /*here we check to see if the lift is trying to go higher than the maximum extension.
