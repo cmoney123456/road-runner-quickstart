@@ -238,7 +238,7 @@ public class coreyPracticeFullTeleOp2 extends LinearOpMode {
            double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
            double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
 
-           rotX = rotX * 1.1;  // Counteract imperfect strafing
+          // rotX = rotX * 1.1;  // Counteract imperfect strafing
 
            // Denominator is the largest motor power (absolute value) or 1
            // This ensures all the powers maintain the same ratio,
@@ -376,7 +376,8 @@ public class coreyPracticeFullTeleOp2 extends LinearOpMode {
             our armLiftComp, which adjusts the arm height for different lift extensions.
             We also set the target velocity (speed) the motor runs at, and use setMode to run it.*/
 
-            armMotor.setTargetPosition((int) (armPosition + armPositionFudgeFactor + armLiftComp));
+            //armMotor.setTargetPosition((int) (armPosition + armPositionFudgeFactor + armLiftComp));
+            armMotor.setTargetPosition((int) armPositionFudgeFactor);
 
             ((DcMotorEx) armMotor).setVelocity(2100);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
