@@ -94,7 +94,7 @@ public class coreyPracticeTeleOp3 extends LinearOpMode {
         while (opModeIsActive()) {
             double horizontal = gamepad1.left_stick_x;
             double vertical = -gamepad1.left_stick_y;
-            double pivot = gamepad1.right_stick_x;
+            double pivot = -gamepad1.right_stick_x;
             double pivotPower = gamepad2.right_stick_y * 0.75;
             double slidePower = gamepad2.left_stick_y;
 
@@ -108,7 +108,7 @@ public class coreyPracticeTeleOp3 extends LinearOpMode {
             }
             if (gamepad2.left_trigger > 0) {
                 wristPower = 0.6;
-            } else {
+            } else if (gamepad2.right_trigger > 0){
                 wristPower = 0.1667;
             }
 

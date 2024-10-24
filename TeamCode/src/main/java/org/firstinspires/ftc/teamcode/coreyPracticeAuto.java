@@ -75,16 +75,18 @@ public class coreyPracticeAuto extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
+    private DcMotor liftMotor = null;
 
     @Override
     public void runOpMode() {
 
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
-        leftFrontDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        leftFrontDrive  = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        leftBackDrive  = hardwareMap.get(DcMotor.class, "leftBackDrive");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFrontDrive");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "rightBackDrive");
+        liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -107,7 +109,9 @@ public class coreyPracticeAuto extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        moveForward(.5,2000);
+        liftArm(-.25,1000);
+        moveRight(.65, -.25,1000);
+
 
 
 
@@ -117,10 +121,35 @@ public class coreyPracticeAuto extends LinearOpMode {
             telemetry.update();
         }
     public void moveForward (double power,int time) {
+        leftBackDrive.setPower(power);
+        leftFrontDrive.setPower(power);
+        rightBackDrive.setPower(power);
+        rightFrontDrive.setPower(power);
+        sleep(time);
+    }
+    public void moveRight (double power, double liftPower, int time){
         leftBackDrive.setPower(-power);
         leftFrontDrive.setPower(power);
         rightBackDrive.setPower(power);
         rightFrontDrive.setPower(-power);
+        liftMotor.setPower(liftPower);
+
         sleep(time);
     }
+    public void moveLeft (double power, double liftPower, int time){
+        leftBackDrive.setPower(power);
+        leftFrontDrive.setPower(-power);
+        rightBackDrive.setPower(-power);
+        rightFrontDrive.setPower(power);
+        liftMotor.setPower(liftPower);
+
+        sleep(time);
+    }
+    public void liftArm (double liftPower, int time){
+        liftMotor.setPower(liftPower);
+
+        sleep(time);
+
+    }
+
     }
