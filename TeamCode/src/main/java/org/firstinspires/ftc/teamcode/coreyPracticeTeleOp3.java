@@ -99,11 +99,11 @@ public class coreyPracticeTeleOp3 extends LinearOpMode {
             double slidePower = gamepad2.left_stick_y;
 
 
-            if (gamepad2.left_bumper) {
+            if (gamepad1.left_bumper) {
                 intakePower = -1.0;
-            } else if (gamepad2.right_bumper) {
+            } else if (gamepad1.right_bumper) {
                 intakePower = 0.5;
-            } else if (gamepad2.y) {
+            } else if (gamepad1.y) {
                 intakePower = 0.0;
             }
             if (gamepad2.left_trigger > 0) {
