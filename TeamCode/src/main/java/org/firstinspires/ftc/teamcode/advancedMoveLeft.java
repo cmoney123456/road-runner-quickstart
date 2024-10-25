@@ -29,9 +29,10 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -62,26 +63,45 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Billy boyb" , group="Linear OpMode")
+@Autonomous(name="Advanced Move Left", group="Linear OpMode")
 
-public class coreyPracticeTeleOp3 extends LinearOpMode {
-
-    double power = 1;
-    double intakePower = 0;
-    double wristPower = 0.1667;
-
+public class advancedMoveLeft extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
-
-    MechanumClass drive = new MechanumClass();
-    IMUClass imu = new IMUClass();
+    private DcMotor leftFrontDrive = null;
+    private DcMotor leftBackDrive = null;
+    private DcMotor rightFrontDrive = null;
+    private DcMotor rightBackDrive = null;
+    private DcMotor liftMotor = null;
+    private Servo   wrist;
 
     @Override
     public void runOpMode() {
 
-        drive.init(hardwareMap, false);
-        imu.initIMU(hardwareMap);
+        // Initialize the hardware variables. Note that the strings used here must correspond
+        // to the names assigned during the robot configuration step on the DS or RC devices.
+        leftFrontDrive  = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        leftBackDrive  = hardwareMap.get(DcMotor.class, "leftBackDrive");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFrontDrive");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "rightBackDrive");
+        liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
+        wrist = hardwareMap.get(Servo.class,"wrist");
+
+        // ########################################################################################
+        // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
+        // ########################################################################################
+        // Most robots need the motors on one side to be reversed to drive forward.
+        // The motor reversals shown here are for a "direct drive" robot (the wheels turn the same direction as the motor shaft)
+        // If your robot has additional gear reductions or uses a right-angled drive, it's important to ensure
+        // that your motors are turning in the correct direction.  So, start out with the reversals here, BUT
+        // when you first test your robot, push the left joystick forward and observe the direction the wheels turn.
+        // Reverse the direction (flip FORWARD <-> REVERSE ) of any wheel that runs backward
+        // Keep testing until ALL the wheels move the robot forward when you push the left joystick forward.
+        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
@@ -89,37 +109,52 @@ public class coreyPracticeTeleOp3 extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-
-        // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
-            double horizontal = gamepad1.left_stick_x;
-            double vertical = -gamepad1.left_stick_y;
-            double pivot = -gamepad1.right_stick_x;
-            double pivotPower = gamepad2.right_stick_y * 0.4;
-            double slidePower = gamepad2.left_stick_y;
-
-
-            if (gamepad1.left_bumper) {
-                intakePower = -1.0;
-            } else if (gamepad1.right_bumper) {
-                intakePower = 0.5;
-            } else if (gamepad1.y) {
-                intakePower = 0.0;
-            }
-            if (gamepad2.left_trigger > 0) {
-                wristPower = 0.6;
-            } else if (gamepad2.right_trigger > 0){
-                wristPower = 0.1667;
-            }
+        liftArm(-.25, 0.1667,1000);
+        moveLeft(.65, -.25, 0.1667,1000);
+        moveRight(.45,-.25, 0.1667 , 6000);
 
 
 
-            if (gamepad1.dpad_up){
-                power = 1;
-            }
-            if (gamepad1.dpad_down){
-              power = 0.5;
-            }
-            drive.teleOP(power, pivot, vertical, horizontal,pivotPower,slidePower,intakePower,wristPower);
+
+
+            // Show the elapsed game time and wheel power.
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.update();
         }
-    }}
+    public void moveForward (double power,int time) {
+        leftBackDrive.setPower(power);
+        leftFrontDrive.setPower(power);
+        rightBackDrive.setPower(power);
+        rightFrontDrive.setPower(power);
+        sleep(time);
+    }
+    public void moveRight (double power, double liftPower, double wristPos, int time){
+        leftBackDrive.setPower(-power);
+        leftFrontDrive.setPower(power);
+        rightBackDrive.setPower(power);
+        rightFrontDrive.setPower(-power);
+        liftMotor.setPower(liftPower);
+        wrist.setPosition(wristPos);
+
+        sleep(time);
+    }
+    public void moveLeft (double power, double liftPower, double wristPos, int time){
+        leftBackDrive.setPower(power);
+        leftFrontDrive.setPower(-power);
+        rightBackDrive.setPower(-power);
+        rightFrontDrive.setPower(power);
+        liftMotor.setPower(liftPower);
+        wrist.setPosition(wristPos);
+
+        sleep(time);
+    }
+    public void liftArm (double liftPower, double wristPos, int time){
+        liftMotor.setPower(liftPower);
+        wrist.setPosition(wristPos);
+
+
+        sleep(time);
+
+    }
+
+    }

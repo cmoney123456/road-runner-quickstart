@@ -30,11 +30,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -65,9 +63,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Basic: Omni Linear OpMode", group="Linear OpMode")
+@Autonomous(name="Basic Move Left", group="Linear OpMode")
 
-public class coreyPracticeAuto extends LinearOpMode {
+public class basicMoveLeft extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
@@ -76,6 +74,7 @@ public class coreyPracticeAuto extends LinearOpMode {
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
     private DcMotor liftMotor = null;
+    private Servo   wrist;
 
     @Override
     public void runOpMode() {
@@ -87,6 +86,7 @@ public class coreyPracticeAuto extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "rightBackDrive");
         liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
+        wrist = hardwareMap.get(Servo.class,"wrist");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -109,17 +109,18 @@ public class coreyPracticeAuto extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        liftArm(-.25,1000);
-        moveRight(.65, -.25,1000);
+        liftArm(-.25, 0.1667,1000);
+        moveLeft(.65, -.25, 0.1667,1000);
+        moveRight(.25,-.25, 0.1667 , 500);
 
 
 
 
 
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.update();
-        }
+        // Show the elapsed game time and wheel power.
+        telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.update();
+    }
     public void moveForward (double power,int time) {
         leftBackDrive.setPower(power);
         leftFrontDrive.setPower(power);
@@ -127,29 +128,33 @@ public class coreyPracticeAuto extends LinearOpMode {
         rightFrontDrive.setPower(power);
         sleep(time);
     }
-    public void moveRight (double power, double liftPower, int time){
+    public void moveRight (double power, double liftPower, double wristPos, int time){
         leftBackDrive.setPower(-power);
         leftFrontDrive.setPower(power);
         rightBackDrive.setPower(power);
         rightFrontDrive.setPower(-power);
         liftMotor.setPower(liftPower);
+        wrist.setPosition(wristPos);
 
         sleep(time);
     }
-    public void moveLeft (double power, double liftPower, int time){
+    public void moveLeft (double power, double liftPower, double wristPos, int time){
         leftBackDrive.setPower(power);
         leftFrontDrive.setPower(-power);
         rightBackDrive.setPower(-power);
         rightFrontDrive.setPower(power);
         liftMotor.setPower(liftPower);
+        wrist.setPosition(wristPos);
 
         sleep(time);
     }
-    public void liftArm (double liftPower, int time){
+    public void liftArm (double liftPower, double wristPos, int time){
         liftMotor.setPower(liftPower);
+        wrist.setPosition(wristPos);
+
 
         sleep(time);
 
     }
 
-    }
+}
