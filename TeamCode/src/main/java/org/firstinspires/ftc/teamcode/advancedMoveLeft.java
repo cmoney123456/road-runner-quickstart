@@ -111,7 +111,7 @@ public class advancedMoveLeft extends LinearOpMode {
         runtime.reset();
         liftArm(-.25, 0.1667,1000);
         moveLeft(.65, -.25, 0.1667,1000);
-        moveRight(.45,-.25, 0.1667 , 6000);
+        moveRight(.45,-.15, 0.1667 , 6000);
 
 
 

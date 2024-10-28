@@ -110,8 +110,8 @@ public class basicMoveLeft extends LinearOpMode {
         waitForStart();
         runtime.reset();
         liftArm(-.25, 0.1667,1000);
-        moveLeft(.65, -.25, 0.1667,1000);
-        moveRight(.25,-.25, 0.1667 , 500);
+        moveLeft(.65, -.15, 0.1667,1000);
+        moveRight(.25,-.15, 0.1667 , 500);
 
 
 
