@@ -126,5 +126,14 @@ public class coreyPracticeTeleOp3 extends LinearOpMode {
               power = 0.5;
             }
             drive.teleOP(power, pivot, vertical, horizontal,pivotPower,slidePower,intakePower,wristPower);
+
+
+            telemetry.addData("Drive Power",power);
+            telemetry.addData("Lift Power",pivotPower);
+            telemetry.addData("Slide Power",slidePower);
+            telemetry.addData("intakePower",intakePower);
+            telemetry.update();
+
+
         }
     }}
