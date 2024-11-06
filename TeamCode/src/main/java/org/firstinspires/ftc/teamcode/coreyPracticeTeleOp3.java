@@ -116,8 +116,11 @@ public class coreyPracticeTeleOp3 extends LinearOpMode {
             if (gamepad2.dpad_down) {
                 pivotPower = gamepad2.right_stick_y * 0.3;
             }
-            if (gamepad2.dpad_up) {
+            else if (gamepad2.dpad_up) {
                 pivotPower = gamepad2.right_stick_y * 0.5;
+            }
+            else if (gamepad2.dpad_left){
+                pivotPower = 0.3;
             }
             if (gamepad1.dpad_up){
                 power = 1;
