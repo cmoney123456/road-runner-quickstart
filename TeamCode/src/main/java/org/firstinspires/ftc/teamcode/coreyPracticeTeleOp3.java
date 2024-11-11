@@ -125,7 +125,7 @@ public class coreyPracticeTeleOp3 extends LinearOpMode {
             if (gamepad1.dpad_up){
                 power = 1;
             }
-            if (gamepad1.dpad_down){
+            else if (gamepad1.dpad_down){
               power = 0.5;
             }
             drive.teleOP(power, pivot, vertical, horizontal,pivotPower,slidePower,intakePower,wristPower);

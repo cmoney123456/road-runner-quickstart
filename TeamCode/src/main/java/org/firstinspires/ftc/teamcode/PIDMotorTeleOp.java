@@ -13,9 +13,9 @@ public class PIDMotorTeleOp extends LinearOpMode {
     // PID parameters
     double integral = 0;
     double lastError = 0;
-    double Kp = 0.1; // Proportional gain
-    double Ki = 0.001; // Integral gain
-    double Kd = 0.001; // Derivative gain
+    double Kp = 0.001; // Proportional gain
+    double Ki = 0.00001; // Integral gain
+    double Kd = 0.00001; // Derivative gain
     double targetPosition = 0; // Target position
 
     // Tuning and timing parameters
@@ -60,22 +60,22 @@ public class PIDMotorTeleOp extends LinearOpMode {
 
             // Allow user to adjust PID constants with D-pad or other buttons
             if (gamepad1.dpad_up) {
-                Kp += 0.01;  // Increase Kp
+                Kp += 0.001;  // Increase Kp
             }
             if (gamepad1.dpad_down) {
-                Kp -= 0.01;  // Decrease Kp
+                Kp -= 0.001;  // Decrease Kp
             }
             if (gamepad1.dpad_left) {
-                Ki += 0.001;  // Increase Ki
+                Ki += 0.00001;  // Increase Ki
             }
             if (gamepad1.dpad_right) {
-                Ki -= 0.001;  // Decrease Ki
+                Ki -= 0.00001;  // Decrease Ki
             }
             if (gamepad1.right_bumper) {
-                Kd += 0.01;  // Increase Kd
+                Kd += 0.00001;  // Increase Kd
             }
             if (gamepad1.left_bumper) {
-                Kd -= 0.01;  // Decrease Kd
+                Kd -= 0.00001;  // Decrease Kd
             }
 
             // Call the PID control method to calculate motor power
@@ -85,7 +85,7 @@ public class PIDMotorTeleOp extends LinearOpMode {
             motorPower = Math.max(-1, Math.min(1, motorPower));
 
             // Set the motor power
-            testMotor.setPower(motorPower * 0.075);
+            testMotor.setPower(motorPower * 0.05);
 
             // Optional: Display motor position and PID constants on the dashboard for debugging
             telemetry.addData("Motor Position", testMotor.getCurrentPosition());
